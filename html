@@ -1,0 +1,603 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resumen GDN / Chango Más</title>
+  <style>
+    :root{
+      --bg:#f5f5f7;
+      --panel:#fbfbfd;
+      --text:#1d1d1f;
+      --muted:#6e6e73;
+      --line:rgba(0,0,0,0.08);
+      --line-strong:rgba(0,0,0,0.12);
+      --accent:#0071e3;
+      --accent-soft:rgba(0,113,227,0.08);
+      --green:#1f7a4d;
+      --green-soft:rgba(31,122,77,0.08);
+      --amber:#8a5a00;
+      --amber-soft:rgba(138,90,0,0.08);
+      --shadow:0 1px 3px rgba(0,0,0,0.06), 0 16px 40px rgba(0,0,0,0.05);
+      --radius:22px;
+      --radius-sm:14px;
+      --space-1:8px;
+      --space-2:16px;
+      --space-3:24px;
+      --space-4:32px;
+      --space-5:48px;
+      --space-6:64px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.5;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+
+    .shell{
+      max-width:1120px;
+      margin:0 auto;
+      padding:32px 24px 72px;
+    }
+
+    .hero{
+      background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.72));
+      backdrop-filter:blur(20px);
+      border:1px solid var(--line);
+      border-radius:32px;
+      padding:40px;
+      box-shadow:var(--shadow);
+      animation:fadeUp .45s ease both;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-bottom:12px;
+    }
+
+    h1{
+      margin:0 0 14px;
+      font-size:36px;
+      line-height:1.08;
+      letter-spacing:-0.03em;
+      font-weight:650;
+    }
+
+    .subtitle{
+      max-width:780px;
+      font-size:18px;
+      color:var(--muted);
+      margin:0 0 22px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.3fr .9fr;
+      gap:20px;
+      margin-top:28px;
+    }
+
+    .panel{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:24px;
+      box-shadow:0 1px 2px rgba(0,0,0,0.03);
+      transition:background-color .2s ease, transform .15s ease, box-shadow .2s ease;
+    }
+
+    .panel:hover{
+      transform:translateY(-1px);
+      box-shadow:0 8px 24px rgba(0,0,0,0.05);
+    }
+
+    .kicker{
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-bottom:10px;
+    }
+
+    .big-take{
+      font-size:22px;
+      line-height:1.2;
+      letter-spacing:-0.02em;
+      font-weight:600;
+      margin:0 0 10px;
+    }
+
+    .body-copy{
+      color:var(--muted);
+      font-size:15px;
+      margin:0;
+    }
+
+    .chip-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:20px;
+    }
+
+    .chip{
+      border-radius:999px;
+      padding:10px 14px;
+      font-size:13px;
+      background:#fff;
+      border:1px solid var(--line);
+      color:#3a3a3c;
+    }
+
+    .sections{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:20px;
+      margin-top:22px;
+    }
+
+    .section{
+      background:rgba(255,255,255,0.72);
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:28px;
+      box-shadow:var(--shadow);
+      animation:fadeUp .45s ease both;
+    }
+
+    .section:nth-child(2){ animation-delay:.05s; }
+    .section:nth-child(3){ animation-delay:.1s; }
+    .section:nth-child(4){ animation-delay:.15s; }
+
+    h2{
+      margin:0 0 16px;
+      font-size:24px;
+      line-height:1.15;
+      letter-spacing:-0.02em;
+      font-weight:620;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+
+    .card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:20px;
+      min-height:100%;
+      transition:background-color .2s ease, transform .15s ease;
+    }
+
+    .card:hover{ transform:translateY(-1px); }
+
+    .card h3{
+      margin:0 0 10px;
+      font-size:16px;
+      line-height:1.25;
+      letter-spacing:-0.01em;
+      font-weight:610;
+    }
+
+    .list{
+      margin:0;
+      padding-left:18px;
+      color:var(--muted);
+      font-size:15px;
+    }
+
+    .list li{ margin:0 0 8px; }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:12px;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+      margin-bottom:12px;
+      border:1px solid transparent;
+    }
+
+    .tag.green{ background:var(--green-soft); color:var(--green); border-color:rgba(31,122,77,0.12); }
+    .tag.blue{ background:var(--accent-soft); color:var(--accent); border-color:rgba(0,113,227,0.12); }
+    .tag.amber{ background:var(--amber-soft); color:var(--amber); border-color:rgba(138,90,0,0.12); }
+
+    .decision-box{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:14px;
+      margin-top:18px;
+    }
+
+    .decision{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .decision .label{
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-bottom:8px;
+    }
+
+    .decision .value{
+      font-size:16px;
+      line-height:1.3;
+      font-weight:600;
+      letter-spacing:-0.01em;
+    }
+
+    .note{
+      margin-top:16px;
+      padding:16px 18px;
+      border-radius:16px;
+      background:#fff;
+      border:1px solid var(--line);
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .footer{
+      margin-top:22px;
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .interactive-summary{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:16px;
+    }
+
+    .pill{
+      padding:9px 12px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid var(--line);
+      font-size:13px;
+      color:#3a3a3c;
+    }
+
+    details{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:0;
+      overflow:hidden;
+      transition:transform .15s ease, box-shadow .2s ease;
+    }
+
+    details:hover{
+      transform:translateY(-1px);
+      box-shadow:0 8px 24px rgba(0,0,0,0.05);
+    }
+
+    summary{
+      list-style:none;
+      cursor:pointer;
+      padding:18px 20px;
+      font-weight:600;
+      font-size:15px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      outline:none;
+    }
+
+    summary::-webkit-details-marker{ display:none; }
+
+    .details-body{
+      padding:0 20px 18px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .plus{
+      font-size:18px;
+      color:var(--muted);
+      transition:transform .2s ease;
+    }
+
+    details[open] .plus{ transform:rotate(45deg); }
+
+    @keyframes fadeUp{
+      from{ opacity:0; transform:translateY(14px); }
+      to{ opacity:1; transform:translateY(0); }
+    }
+
+    @media (max-width: 860px){
+      .hero{ padding:28px; border-radius:26px; }
+      .hero-grid, .grid-2, .decision-box{ grid-template-columns:1fr; }
+      h1{ font-size:30px; }
+      .subtitle{ font-size:17px; }
+      .shell{ padding:20px 16px 56px; }
+    }
+
+    @media print {
+      @page {
+        margin: 0;
+        size: 8.5in 999in;
+      }
+
+      body {
+        margin: 0;
+        padding: 0.4in 0.6in;
+        background: #fff;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      .container, .dashboard, .shell, main {
+        max-width: 100% !important;
+        width: 100% !important;
+      }
+
+      section, [class*="section"], .header {
+        margin-bottom: 20px !important;
+      }
+
+      [class*="card"], [class*="Card"] {
+        padding: 18px !important;
+        box-shadow: none !important;
+        border: 1px solid rgba(0,0,0,0.08);
+      }
+
+      [class*="grid"], [class*="row"] {
+        gap: 10px !important;
+        margin-bottom: 20px !important;
+      }
+
+      [class*="chart"], [class*="Chart"] {
+        height: 240px !important;
+      }
+
+      [class*="chart"][class*="tall"], [class*="Chart"][class*="tall"],
+      [class*="chart"][class*="full"], [class*="Chart"][class*="full"] {
+        height: 280px !important;
+      }
+
+      [class*="quote-list"], [class*="scroll"],
+      [style*="max-height"], [style*="overflow"] {
+        max-height: none !important;
+        overflow: visible !important;
+      }
+
+      [class*="tab-panel"], [class*="tabpanel"] {
+        display: block !important;
+      }
+
+      [class*="tab-bar"], [class*="tabs"]:not([class*="panel"]) {
+        display: none !important;
+      }
+
+      [class*="fade"], [class*="animate"], [class*="slide"] {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      button, [role="button"], .interactive-only {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div class="eyebrow">GDN / Chango Más · resumen de preparación</div>
+      <h1>Lo que entendimos hasta ahora y lo que conviene validar antes del lunes</h1>
+      <p class="subtitle">
+        Nuestra lectura es que la oportunidad es fuerte, pero el punto clave no es solo el caso de uso: es entender con precisión la arquitectura, la integración y la experiencia esperada para no sobredimensionar el mensaje en la primera reunión.
+      </p>
+
+      <div class="chip-row">
+        <div class="chip">Retail operations</div>
+        <div class="chip">ODS en Oracle</div>
+        <div class="chip">Connexa / ZeeTrex</div>
+        <div class="chip">Agentes especializados</div>
+        <div class="chip">Orquestación</div>
+        <div class="chip">Próxima mejor acción</div>
+      </div>
+
+      <div class="hero-grid">
+        <div class="panel">
+          <div class="kicker">Lectura principal</div>
+          <div class="big-take">Vemos una oportunidad clara en un caso de soporte a decisiones operativas, no solo de búsqueda.</div>
+          <p class="body-copy">
+            El caso parece orientado a ayudar a cada gerente de tienda a consultar información, entender qué está pasando y recibir recomendaciones accionables alrededor de merma, stock y rotación.
+          </p>
+        </div>
+        <div class="panel">
+          <div class="kicker">Tema a des-riesgar</div>
+          <div class="big-take">La pregunta central es técnica: datos, APIs e integración.</div>
+          <p class="body-copy">
+            Antes de prometer una experiencia embebida o conectores custom, conviene validar qué expone el ODS, qué expone Connexa y qué experiencia esperan realmente para la fase inicial.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <span class="tag green">Lo que entendimos</span>
+      <h2>Entendimiento actual del caso</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Problema de negocio</h3>
+          <ul class="list">
+            <li>GDN quiere agentes especializados para <strong>merma</strong>, <strong>stock</strong> y <strong>rotación</strong>.</li>
+            <li>La idea es que exista además un <strong>agente orquestador</strong> que reciba la consulta del gerente y derive al flujo correcto.</li>
+            <li>El objetivo parece ser mejorar la <strong>redistribución operativa</strong> y la <strong>toma de decisiones centralizada</strong> entre tiendas.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Experiencia deseada</h3>
+          <ul class="list">
+            <li>La visión no parece ser solo “buscar información más rápido”.</li>
+            <li>Lo que están imaginando es <strong>analizar</strong>, <strong>sintetizar</strong> y eventualmente <strong>recomendar acciones</strong>.</li>
+            <li>También entendemos que les interesa que esto viva dentro de <strong>Connexa</strong>, la aplicación propia desarrollada por ZeeTrex.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="interactive-summary">
+        <div class="pill">Caso principal: retail</div>
+        <div class="pill">Usuario final: gerente de tienda</div>
+        <div class="pill">Contexto adicional: organizacional</div>
+        <div class="pill">Ambición: insights + recomendaciones</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <span class="tag blue">Lo que conviene validar</span>
+      <h2>Preguntas clave para alinear antes de la reunión</h2>
+
+      <div class="grid-2">
+        <details open>
+          <summary>
+            <span>1. Datos y sistemas</span>
+            <span class="plus">+</span>
+          </summary>
+          <div class="details-body">
+            <ul class="list">
+              <li>¿Qué información vive hoy en el <strong>ODS</strong> y qué información vive en otros sistemas?</li>
+              <li>¿El ODS es la fuente principal para stock, merma y rotación, o es solo una capa intermedia?</li>
+              <li>¿Qué forma de acceso existe: tablas, vistas, APIs, exports u otro mecanismo?</li>
+            </ul>
+          </div>
+        </details>
+
+        <details open>
+          <summary>
+            <span>2. Connexa e integración</span>
+            <span class="plus">+</span>
+          </summary>
+          <div class="details-body">
+            <ul class="list">
+              <li>¿Connexa tiene <strong>APIs</strong> o puntos claros de integración?</li>
+              <li>¿Quieren una primera fase en la <strong>UI de Glean</strong> o esperan algo embebido en <strong>su propia UI</strong> desde el inicio?</li>
+              <li>Si la experiencia debe vivir en Connexa, ¿qué parte quieren integrar exactamente: consulta, respuesta, recomendación o acción?</li>
+            </ul>
+          </div>
+        </details>
+
+        <details open>
+          <summary>
+            <span>3. Nivel de “recomendación” esperado</span>
+            <span class="plus">+</span>
+          </summary>
+          <div class="details-body">
+            <ul class="list">
+              <li>¿Buscan una recomendación guiada por IA para que el gerente decida?</li>
+              <li>¿O esperan algo más cercano a una lógica de optimización / workflow operativo?</li>
+              <li>¿La acción termina en una recomendación o debería disparar algún proceso aguas abajo?</li>
+            </ul>
+          </div>
+        </details>
+
+        <details open>
+          <summary>
+            <span>4. Alcance de la primera reunión</span>
+            <span class="plus">+</span>
+          </summary>
+          <div class="details-body">
+            <ul class="list">
+              <li>¿Buscamos que el lunes sea una reunión de <strong>descubrimiento + visión</strong>?</li>
+              <li>¿O quieren entrar desde ya en una conversación de <strong>viabilidad técnica detallada</strong>?</li>
+              <li>Nuestra recomendación sería mantenerla como una reunión de descubrimiento y arquitectura de alto nivel.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="section">
+      <span class="tag amber">Propuesta</span>
+      <h2>Cómo propondríamos posicionarlo el lunes</h2>
+
+      <div class="decision-box">
+        <div class="decision">
+          <div class="label">Qué sí decir</div>
+          <div class="value">Glean puede ser la capa de IA gobernada sobre sus datos operativos y contexto organizacional.</div>
+        </div>
+        <div class="decision">
+          <div class="label">Qué cuidar</div>
+          <div class="value">No asumir desde el inicio una integración embebida compleja dentro de Connexa sin revisar APIs y arquitectura.</div>
+        </div>
+        <div class="decision">
+          <div class="label">Enfoque sugerido</div>
+          <div class="value">Priorizar el caso retail y dejar logística como ángulo secundario, listo por si aparece.</div>
+        </div>
+      </div>
+
+      <div class="note">
+        La forma más sólida de presentar esto sería: <strong>primero entender datos, sistemas y experiencia deseada</strong>; después, mostrar cómo Glean puede ayudar a consultar, sintetizar y recomendar con gobierno y contexto; y recién luego explorar el camino de integración más profundo si hace sentido.
+      </div>
+    </section>
+
+    <section class="section">
+      <span class="tag blue">Logística / OCA</span>
+      <h2>Cómo entendemos el pedido de logística</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Nuestra interpretación</h3>
+          <p class="body-copy">
+            Entendemos que logística no reemplaza el caso principal de GDN. Más bien aparece porque la misma persona tendría relevancia futura en la transformación digital de OCA, y por eso vale la pena tener un ángulo de posicionamiento listo.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Recomendación práctica</h3>
+          <p class="body-copy">
+            Ir al lunes con foco principal en retail, y tener una referencia breve de logística preparada como extensión natural de la conversación, no como eje de la reunión.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      Preparado como resumen de trabajo para alinear enfoque, arquitectura y próximos pasos antes de la reunión con GDN / Chango Más.
+    </div>
+  </main>
+
+  <script>
+    window.GleanBridge.postMessage({
+      actionId: 'export-pdf',
+      type: 'glean-add-menu',
+      metadata: { label: 'Export as PDF', icon: 'export' }
+    });
+    window.GleanBridge.onMessage('action', function(data) {
+      if (data.actionId === 'export-pdf') {
+        window.print();
+      }
+    });
+  </script>
+</body>
+</html>
